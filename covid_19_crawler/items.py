@@ -18,3 +18,10 @@ class Covid19Item(scrapy.Item):
 
     death = scrapy.Field()
     cured = scrapy.Field()
+
+
+class newsItem(scrapy.Item):
+    date = scrapy.Field()
+    title = scrapy.Field()
+
+    content = scrapy.Field()

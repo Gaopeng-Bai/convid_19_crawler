@@ -117,21 +117,24 @@ class SeleniumCorona19DownloaderMiddleware(object):
     # create driver object in each spider when working in multi-spiders.
 
     def process_request(self, request, spider):
-        spider.driver.get(request.url)
+        if "dxy.cn" in request.url:
+            spider.driver.get(request.url)
 
-        spider.driver.find_element_by_class_name(
-            "expandRow___1Y0WD").click()
+            spider.driver.find_element_by_class_name(
+                "expandRow___1Y0WD").click()
 
-        origin_code = spider.driver.page_source
-        # 将源代码构造成为一个Response对象，并返回。
-        res = HtmlResponse(
-            url=request.url,
-            encoding='utf8',
-            body=origin_code,
-            request=request)
-        # res = Response(url=request.url, body=bytes(origin_code),
-        # request=request)
-        return res
+            origin_code = spider.driver.page_source
+            # 将源代码构造成为一个Response对象，并返回。
+            res = HtmlResponse(
+                url=request.url,
+                encoding='utf8',
+                body=origin_code,
+                request=request)
+            # res = Response(url=request.url, body=bytes(origin_code),
+            # request=request)
+            return res
+        else:
+            return None
 
     def process_response(self, request, response, spider):
         # print(response.url, response.status)

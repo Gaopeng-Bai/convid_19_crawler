@@ -55,28 +55,6 @@ class MySpider(scrapy.Spider):
 
             yield item
 
-    def error_back_http(self, failure):
-        # log all failures
-        self.logger.info(repr(failure))
-
-        # in case you want to do something special for some errors,
-        # you may need the failure's type:
-
-        if failure.check(HttpError):
-            # these exceptions come from HttpError spider middleware
-            # you can get the non-200 response
-            response = failure.value.response
-            self.logger.info('HttpError on %s', response.url)
-
-        elif failure.check(DNSLookupError):
-            # this is the original request
-            request = failure.request
-            self.logger.info('DNSLookupError on %s', request.url)
-
-        elif failure.check(TimeoutError, TCPTimedOutError):
-            request = failure.request
-            self.logger.info('TimeoutError on %s', request.url)
-
 
 if __name__ == '__main__':
     from scrapy import cmdline
