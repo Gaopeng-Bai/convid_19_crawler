@@ -133,6 +133,24 @@ class SeleniumCorona19DownloaderMiddleware(object):
             # res = Response(url=request.url, body=bytes(origin_code),
             # request=request)
             return res
+        elif "qq.com" in request.url:
+            spider.driver.get(request.url)
+            for x in range(1, 40, 2):
+                height = float(x) / 10
+                js = "document.documentElement.scrollTop = document.documentElement.scrollHeight * %f" % height
+                spider.driver.execute_script(js)
+                time.sleep(0.3)
+
+            origin_code = spider.driver.page_source
+            # 将源代码构造成为一个Response对象，并返回。
+            res = HtmlResponse(
+                url=request.url,
+                encoding='utf8',
+                body=origin_code,
+                request=request)
+            # res = Response(url=request.url, body=bytes(origin_code),
+            # request=request)
+            return res
         else:
             return None
 

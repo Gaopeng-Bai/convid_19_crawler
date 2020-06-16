@@ -22,18 +22,32 @@ def parse_template(response):
         for inner in box.xpath('.//li[@class="inner-item article-mod clearfix"]'):
             a = inner.xpath('.//a[@class="pics"]/@href').extract_first()
             yield scrapy.Request(a, callback=parse_newsPage,
-                                 errback=self.error_back_http,
-                                 dont_filter=True)
+                                 errback=self.error_back_http)
 
 
 def parse_newsPage(response):
-    # # debug in scrapy shell
-    # from scrapy.shell import inspect_response
-    # inspect_response(response, MySpider)
     item = newsItem()
 
-    item["date"] = response.xpath('//div[@class="year through"]/span/text()').extract_first()
+    years = response.xpath('//div[@class="year through"]/span/text()').extract_first()
+    mouth_day = ''.join(map(str, response.xpath('//div[@class="md"]/text()').extract()))
+    times = ''.join(map(str, response.xpath('//div[@class="time"]/text()').extract()))
+
+    item["date"] = years + " " + mouth_day + " " + times
+
     item["title"] = response.xpath('//div[@class="LEFT"]/h1/text()').extract_first()
+
+    content = ''
+    for items in response.xpath('//p[@class="one-p"]'):
+        try:
+            text = items.xpath('./text()').extract_first()
+        except Exception as e:
+            pass
+        else:
+            if text is not None:
+                content = content + text.strip().replace('\n', '').replace('\r', '') + '\n '
+
+    item["content"] = content[:-3]
+    return item
 
 
 class MySpider(scrapy.Spider):
@@ -54,12 +68,13 @@ class MySpider(scrapy.Spider):
         for box in response.xpath('//li[contains(@class,"item") and contains(@class, "cf")]'):
 
             a = box.xpath('.//a[@class="picture"]/@href').extract_first()
-            if "template" in a:
-                yield scrapy.Request(a, callback=parse_template,
-                                     errback=self.error_back_http)
-            else:
-                yield scrapy.Request(a, callback=parse_newsPage,
-                                     errback=self.error_back_http)
+            if a is not None:
+                if "template" in a:
+                    yield scrapy.Request(a, callback=parse_template,
+                                         errback=self.error_back_http)
+                else:
+                    yield scrapy.Request(a, callback=parse_newsPage,
+                                         errback=self.error_back_http)
 
     def error_back_http(self, failure):
         # log all failures
