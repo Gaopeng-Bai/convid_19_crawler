@@ -21,6 +21,7 @@ class Covid19Pipeline:
             self.china_data_file.write(line)
             return item
         elif spider.name == "ChineseNews":
+
             item['title'] = self.translator.translate(item['title'], dest="en").text
             item['content'] = self.translator.translate(item['content'], dest="en").text
 

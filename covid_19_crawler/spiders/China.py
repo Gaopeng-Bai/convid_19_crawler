@@ -10,11 +10,10 @@
 # @Description: 
 # Reference:**********************************************
 import scrapy
-from scrapy.selector import Selector
 
 from selenium import webdriver
 
-from covid_19_crawler.items import Covid19Item
+from covid_19_crawler.spiders.items import Covid19Item
 
 
 class MySpider(scrapy.Spider):

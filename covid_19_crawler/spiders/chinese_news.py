@@ -10,19 +10,17 @@
 # @Description: 
 # Reference:**********************************************
 import scrapy
-from scrapy.selector import Selector
 
 from selenium import webdriver
 
-from covid_19_crawler.items import newsItem
+from items import newsItem
 
 
 def parse_template(response):
     for box in response.xpath('//div[@class="item-box"]'):
         for inner in box.xpath('.//li[@class="inner-item article-mod clearfix"]'):
             a = inner.xpath('.//a[@class="pics"]/@href').extract_first()
-            yield scrapy.Request(a, callback=parse_newsPage,
-                                 errback=self.error_back_http)
+            yield scrapy.Request(a, callback=parse_newsPage)
 
 
 def parse_newsPage(response):
@@ -44,7 +42,9 @@ def parse_newsPage(response):
             pass
         else:
             if text is not None:
-                content = content + text.strip().replace('\n', '').replace('\r', '') + '\n '
+                temp = text.strip().replace('\n', '').replace('\r', '')
+                if temp != "":
+                    content = content + temp.replace('“', "").replace('”', "") + '\n '
 
     item["content"] = content[:-3]
     return item
