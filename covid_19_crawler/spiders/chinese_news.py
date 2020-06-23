@@ -17,6 +17,7 @@ from items import newsItem
 
 
 def parse_template(response):
+    
     for box in response.xpath('//div[@class="item-box"]'):
         for inner in box.xpath('.//li[@class="inner-item article-mod clearfix"]'):
             a = inner.xpath('.//a[@class="pics"]/@href').extract_first()

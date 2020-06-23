@@ -7,11 +7,12 @@
 import codecs
 import json
 from googletrans import Translator
+from translator.translator import translator
 
 
 class Covid19Pipeline:
     def __init__(self):
-        self.translator = Translator()
+        self.translator = translator(translator_name="microsoft", to_language="de")
         self.china_data_file = codecs.open("../../Covid19_china_data.json", "ab", encoding="utf-8")
         self.china_news_file = codecs.open("../../Covid19_china_news.json", "ab", encoding="utf-8")
 
@@ -22,8 +23,8 @@ class Covid19Pipeline:
             return item
         elif spider.name == "ChineseNews":
 
-            item['title'] = self.translator.translate(item['title'], dest="en").text
-            item['content'] = self.translator.translate(item['content'], dest="en").text
+            item['title'] = self.translator.translate_text(text=item['title'])
+            item['content'] = self.translator.translate_text(text=item['content'])
 
             line = json.dumps(dict(item), ensure_ascii=False) + '\n'
             self.china_news_file.write(line)
