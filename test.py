@@ -9,13 +9,11 @@
 # @Software: PyCharm
 # @Description: 
 # Reference:**********************************************
-# from selenium import webdriver
-#
-# option = webdriver.ChromeOptions()
-# option.add_argument('--headless')
-# option.add_argument("--no-sandbox")
-# driver = webdriver.Chrome(options=option)
-import codecs
+from selenium import webdriver
+
+option = webdriver.ChromeOptions()
+option.add_argument('--headless')
+option.add_argument("--no-sandbox")
+driver = webdriver.Chrome(options=option)
 
 print(0)
-codecs.open("test.json", "ab", encoding="utf-8")
