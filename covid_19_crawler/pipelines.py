@@ -12,8 +12,8 @@ from translator.translator import translator
 class Covid19Pipeline:
     def __init__(self):
         self.translator = translator(translator_name="microsoft", to_language="de")
-        self.china_data_file = codecs.open("../../Covid19_china_data.json", "ab", encoding="utf-8")
-        self.china_news_file = codecs.open("../../Covid19_china_news.json", "ab", encoding="utf-8")
+        self.china_data_file = codecs.open("Covid19_china_data.json", "ab", encoding="utf-8")
+        self.china_news_file = codecs.open("Covid19_china_news.json", "ab", encoding="utf-8")
 
     def process_item(self, item, spider):
         if spider.name == "China":
