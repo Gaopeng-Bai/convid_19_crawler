@@ -13,7 +13,7 @@ import scrapy
 
 from selenium import webdriver
 
-from items import newsItem
+from covid_19_crawler.items import Covid19Item
 
 
 def parse_template(response):
