@@ -26,8 +26,9 @@ class MySpider(scrapy.Spider):
         # create driver when init Alibaba object
         super(MySpider, self).__init__(name='China')
         option = webdriver.ChromeOptions()
-        option.add_argument('headless')
-        self.driver = webdriver.Chrome(executable_path="D:\chromedriver.exe", chrome_options=option)
+        option.add_argument('--headless')
+        option.add_argument("--no-sandbox")
+        self.driver = webdriver.Chrome(options=option)
 
     def parse(self, response):
 
