@@ -9,10 +9,10 @@
 # @Software: PyCharm
 # @Description: 
 # Reference:**********************************************
-from selenium import webdriver
-
-option = webdriver.ChromeOptions()
-option.add_argument('--headless')
-option.add_argument("--no-sandbox")
-driver = webdriver.Chrome(options=option)
+# from selenium import webdriver
+#
+# option = webdriver.ChromeOptions()
+# option.add_argument('--headless')
+# option.add_argument("--no-sandbox")
+# driver = webdriver.Chrome(options=option)
 print(0)
