@@ -6,7 +6,6 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import codecs
 import json
-from googletrans import Translator
 from translator.translator import translator
 
 
