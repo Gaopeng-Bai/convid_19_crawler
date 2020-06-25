@@ -10,14 +10,17 @@ import scrapy
 
 class Covid19Item(scrapy.Item):
     # define the fields for your item here like:
-    province = scrapy.Field()
-    city = scrapy.Field()
+    # province = scrapy.Field()
+    # city = scrapy.Field()
+    PartitionKey = scrapy.Field()
+    RowKey = scrapy.Field()
 
     current_case = scrapy.Field()
+    new_addition_case = scrapy.Field()
     accumulated_case = scrapy.Field()
+    cured = scrapy.Field()
 
     death = scrapy.Field()
-    cured = scrapy.Field()
 
 
 class newsItem(scrapy.Item):

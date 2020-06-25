@@ -177,5 +177,5 @@ class IPpools(HttpProxyMiddleware):
         self.ip = ip
 
     def process_request(self, request, spider):
-        this_ip = random.choice(IPpools)
+        this_ip = random.choice(IPPOOL)
         request.meta["proxy"] = "http://" + this_ip

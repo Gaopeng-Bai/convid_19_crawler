@@ -36,7 +36,13 @@ user_agent_list = [
     "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
 ]
 
-IPPOOL = []
+IPPOOL = [
+    '176.221.43.250:3128',
+    '80.240.16.118:8080',
+    '62.171.177.80:3129',
+    '45.76.83.72:8080',
+    '176.221.43.250:3128'
+]
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -47,7 +53,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 8
+# DOWNLOAD_DELAY = 8
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -77,7 +83,7 @@ DEFAULT_REQUEST_HEADERS = {
 DOWNLOADER_MIDDLEWARES = {
    'covid_19_crawler.middlewares.SeleniumCorona19DownloaderMiddleware': 543,
    'covid_19_crawler.middlewares.RotateUserAgentMiddleware': 1,
-   # 'covid_19_crawler.middlewares.IPpools': 2,
+   'covid_19_crawler.middlewares.IPpools': 2,
 }
 
 # Enable or disable extensions

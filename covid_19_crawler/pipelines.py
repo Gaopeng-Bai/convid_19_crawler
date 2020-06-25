@@ -6,19 +6,36 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import codecs
 import json
+import time
 from translator.translator import translator
+from azure_table_storage.table_client import azure_table
 
 
 class Covid19Pipeline:
     def __init__(self):
-        self.translator = translator(translator_name="microsoft", to_language="de")
-        self.china_data_file = codecs.open("Covid19_china_data.json", "ab", encoding="utf-8")
-        self.china_news_file = codecs.open("Covid19_china_news.json", "ab", encoding="utf-8")
+        self.translator = translator(translator_name="google_separate", to_language="de")
+        self.azure_table = azure_table()
+        # self.china_data_file = codecs.open("Covid19_china_data.json", "ab")
+        # self.china_news_file = codecs.open("Covid19_china_news.json", "ab", encoding="utf-8")
 
     def process_item(self, item, spider):
         if spider.name == "China":
-            line = json.dumps(dict(item), ensure_ascii=False) + '\n'
-            self.china_data_file.write(line)
+            temp = {}
+            # item['province'] = self.translator.translate_text(text=item['province'])
+            # item['city'] = self.translator.translate_text(text=item['city'])
+            item['PartitionKey'] = self.translator.translate_text(text=item['PartitionKey'])
+            time.sleep(1)
+
+            temp['PartitionKey'] = item['PartitionKey']
+            temp['RowKey'] = item['RowKey']
+            temp['current_case'] = item['current_case']
+            temp['accumulated_case'] = item['accumulated_case']
+            temp['death'] = item['death']
+            temp['cured'] = item['cured']
+            self.azure_table.insert_entity(temp)
+            # with codecs.open("Covid19_china_data.json", "ab", encoding="utf-8") as f:
+            #     line = json.dumps(dict(item), ensure_ascii=False) + '\n'
+            #     f.write(line)
             return item
         elif spider.name == "ChineseNews":
 

@@ -10,7 +10,7 @@
 # @Description: 
 # Reference:**********************************************
 import translators as ts
-
+from googletrans import Translator
 from termcolor import colored
 from bs4 import BeautifulSoup
 
@@ -35,8 +35,8 @@ class translator:
             responseResult = requests.post(cognitiveServiceUrl, headers=requestHeader)
 
             self.token = responseResult.text
-
-            # self.microsoft = Translator("8305750734ea4ea8b89d02ac542a1b48")
+        elif translator_name == "google_separate":
+            self.google_separate = Translator()
 
         self.to_language = to_language
 
@@ -45,6 +45,8 @@ class translator:
             return ts.google(text, to_language=self.to_language)
         elif self.translator == "bing":
             return ts.bing(text, to_language=self.to_language)
+        elif self.translator == "google_separate":
+            return self.google_separate.translate(text=text, dest=self.to_language).text
         elif self.translator == "microsoft":
             params = {'appid': 'Bearer ' + self.token, 'text': text, 'to': self.to_language}
 
