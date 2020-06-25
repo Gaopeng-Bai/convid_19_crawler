@@ -39,28 +39,25 @@ class MySpider(scrapy.Spider):
             # from scrapy.shell import inspect_response
             # inspect_response(response, self)
             a = box.xpath('./@class').extract_first()
-            item['RowKey'] = str(datetime.date.today())
             if "areaBlock1___3qjL7" == a:
                 province = box.xpath('./p[@class="subBlock1___3cWXy"]/text()').extract_first()
                 if province.find('(') != -1:
                     break
                 else:
                     item["PartitionKey"] = province
-                    # item["province"] = province
-
-                # item["city"] = ''
+                item["RowKey"] = ''
                 item["current_case"] = box.xpath('./p[@class="subBlock2___2BONl"]/text()').extract_first().replace("-", "0")
                 item["accumulated_case"] = box.xpath('./p[@class="subBlock3___3dTLM"]/text()').extract_first().replace("-", "0")
                 item["death"] = box.xpath('./p[@class="subBlock4___3SAto"]/text()').extract_first().replace("-", "0")
                 item["cured"] = box.xpath('./p[@class="subBlock5___33XVW"]/text()').extract_first().replace("-", "0")
             elif "areaBlock2___2gER7" == a:
-                # item["province"] = province
+                item["PartitionKey"] = province
                 city = box.xpath('./p[@class="subBlock1___3cWXy"]/span/text()').extract_first()
                 if city is None:
                     continue
                 else:
                     # item["city"] = city
-                    item["PartitionKey"] = city
+                    item["RowKey"] = city
                 item["current_case"] = box.xpath('./p[@class="subBlock2___2BONl"]/text()').extract_first().replace("-", "0")
                 item["accumulated_case"] = box.xpath('./p[@class="subBlock3___3dTLM"]/text()').extract_first().replace("-", "0")
                 item["death"] = box.xpath('./p[@class="subBlock4___3SAto"]/text()').extract_first().replace("-", "0")
