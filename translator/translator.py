@@ -23,7 +23,7 @@ class translator:
         if translator_name == "microsoft":
             # Specify the subscription Key
 
-            subscriptionKey = "3bad207c87df4b1984b932905cb80f31"
+            subscriptionKey = "********"
 
             # Specify URLs for Cognitive Services - Translator Text API
 
