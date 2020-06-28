@@ -20,7 +20,7 @@ class azure_table:
         self.table_client = TableService(connection_string=connection_string)
         self.table_name = table_name
         if self.table_client.exists(table_name):
-            print(0)
+            pass
         else:
             self.table_client.create_table(table_name=table_name)
 
@@ -41,7 +41,7 @@ class azure_table:
             Must contain a PartitionKey and a RowKey.
         :return: null
         """
-        self.table_client.insert_entity(table_name=self.table_name, entity=entity)
+        self.table_client.insert_or_replace_entity(table_name=self.table_name, entity=entity)
 
     def get_entity(self, partition, row):
         """
@@ -50,7 +50,7 @@ class azure_table:
         :param row: The RowKey of the entity.
         :return:
         """
-        self.table_client.get_entity(self.table_name, partition, row)
+        return self.table_client.get_entity(self.table_name, partition_key=partition, row_key=row)
 
 
 if __name__ == '__main__':
