@@ -54,11 +54,12 @@ class MySpider(scrapy.Spider):
             elif "areaBlock2___2gER7" == a:
                 item["PartitionKey"] = province
                 city = box.xpath('./p[@class="subBlock1___3cWXy"]/span/text()').extract_first()
+
                 if city is None:
                     continue
                 else:
                     # item["city"] = city
-                    item["RowKey"] = city
+                    item["RowKey"] = city.replace("区", '').replace("县", '')
                 item["current_case"] = box.xpath('./p[@class="subBlock2___2BONl"]/text()').extract_first().replace("-", "0")
                 item["accumulated_case"] = box.xpath('./p[@class="subBlock3___3dTLM"]/text()').extract_first().replace("-", "0")
                 item["death"] = box.xpath('./p[@class="subBlock4___3SAto"]/text()').extract_first().replace("-", "0")

@@ -27,11 +27,16 @@ class Covid19Pipeline:
             item['RowKey'] = self.translator.translate_text(text=item['RowKey'])
             time.sleep(1)
 
-            a = self.azure_table.get_entity(item['PartitionKey'], item['RowKey'])
-
             temp['PartitionKey'] = item['PartitionKey']
             temp['RowKey'] = item['RowKey']
-            temp['new_case'] = str(int(item['accumulated_case'])-int(a['accumulated_case']))
+
+            try:
+                a = self.azure_table.get_entity(item['PartitionKey'], item['RowKey'])
+                temp['new_case'] = str(int(item['accumulated_case'].replace(',', ''))-int(a['accumulated_case'].replace(',', '')))
+            except Exception as e:
+                temp['new_case'] = 'none'
+                print(e)
+
             temp['current_case'] = item['current_case']
             temp['accumulated_case'] = item['accumulated_case']
             temp['death'] = item['death']

@@ -15,7 +15,7 @@ from azure.cosmosdb.table import TableService
 
 class azure_table:
     def __init__(self, table_name='HemoniDataTable'):
-        connection_string = "****"
+        connection_string = "DefaultEndpointsProtocol=https;AccountName=storageklsbxnntmyn76;AccountKey=6QPT2nKpoY9S229wh5NwWa1TgQRquROR+uNP/T5ldIPSxBavZUsoGyZhtmA+zR3v2YhDGsPZGQKztmP2nWKLSA==;EndpointSuffix=core.windows.net"
 
         self.table_client = TableService(connection_string=connection_string)
         self.table_name = table_name
