@@ -28,8 +28,8 @@ class MySpider(scrapy.Spider):
         option = webdriver.ChromeOptions()
         option.add_argument('--headless')
         # option.add_argument("--no-sandbox")
-        self.driver = webdriver.Chrome(executable_path="D:\chromedriver.exe", options=option)
-        # self.driver = webdriver.Chrome(options=option)
+        # self.driver = webdriver.Chrome(executable_path="D:\chromedriver.exe", options=option)
+        self.driver = webdriver.Chrome(options=option)
 
     def parse(self, response):
 
