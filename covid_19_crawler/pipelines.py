@@ -25,7 +25,7 @@ class Covid19Pipeline:
             # item['city'] = self.translator.translate_text(text=item['city'])
             item['PartitionKey'] = self.translator.translate_text(text=item['PartitionKey'])
             item['RowKey'] = self.translator.translate_text(text=item['RowKey']).replace("Übersee-Import", "Import ins Ausland")
-            time.sleep(0.5)
+            time.sleep(3)
 
             temp['PartitionKey'] = item['PartitionKey']
             temp['RowKey'] = item['RowKey']
