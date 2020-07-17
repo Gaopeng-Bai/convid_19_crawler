@@ -12,7 +12,7 @@
 import scrapy
 import datetime
 from selenium import webdriver
-
+from webdriver_manager.chrome import ChromeDriverManager
 from covid_19_crawler.items import Covid19Item
 
 
@@ -28,7 +28,7 @@ class MySpider(scrapy.Spider):
         option = webdriver.ChromeOptions()
         option.add_argument('--headless')
         # option.add_argument("--no-sandbox")
-        # self.driver = webdriver.Chrome(executable_path="D:\chromedriver.exe", options=option)
+        # self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=option)
         self.driver = webdriver.Chrome(options=option)
 
     def parse(self, response):
@@ -59,7 +59,7 @@ class MySpider(scrapy.Spider):
                     continue
                 else:
                     # item["city"] = city
-                    item["RowKey"] = city.replace("区", '').replace("县", '')
+                    item["RowKey"] = city.replace("区", '').replace("县", '').replace('境外输入人员', '境外输入')
                 item["current_case"] = box.xpath('./p[@class="subBlock2___2BONl"]/text()').extract_first().replace("-", "0")
                 item["accumulated_case"] = box.xpath('./p[@class="subBlock3___3dTLM"]/text()').extract_first().replace("-", "0")
                 item["death"] = box.xpath('./p[@class="subBlock4___3SAto"]/text()').extract_first().replace("-", "0")
