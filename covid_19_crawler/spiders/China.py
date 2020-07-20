@@ -12,7 +12,6 @@
 import scrapy
 import datetime
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from covid_19_crawler.items import Covid19Item
 
 
@@ -28,6 +27,7 @@ class MySpider(scrapy.Spider):
         option = webdriver.ChromeOptions()
         option.add_argument('--headless')
         # option.add_argument("--no-sandbox")
+        # from webdriver_manager.chrome import ChromeDriverManager
         # self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=option)
         self.driver = webdriver.Chrome(options=option)
 
